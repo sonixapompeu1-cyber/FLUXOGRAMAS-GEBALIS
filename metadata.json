@@ -1,0 +1,6 @@
+{
+  "name": "Fluxogramas Contact Center — Gebalis",
+  "description": "Plataforma de consulta, catálogo de 145 páginas Visio, 14 fluxos estruturados, reconciliação forense, validação operacional, governação V7, Editor Oficial V10 e GPS Operacional da GEBALIS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

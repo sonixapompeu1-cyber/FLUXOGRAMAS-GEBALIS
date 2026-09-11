@@ -1,0 +1,1334 @@
+[
+  {
+    "name": "Atendimento Geral e Triagem Inicial",
+    "slug": "triagem-inicial",
+    "nodes": [
+      {
+        "id": "t1",
+        "t": "Receção de Chamada / Contacto do Munícipe",
+        "kind": "start",
+        "x": 480,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "t2",
+        "t": "Identificação do Interlocutor e Morada / Fogo Municipal (Validação no Sistema SIGA)",
+        "kind": "process",
+        "x": 460,
+        "y": 140,
+        "w": 320,
+        "h": 70
+      },
+      {
+        "id": "t3",
+        "t": "O interlocutor é arrendatário titular ou mandatário com procuração válida?",
+        "kind": "decision",
+        "x": 470,
+        "y": 250,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "t4",
+        "t": "Solicitar dados do titular e informar sobre proteção de dados (RGPD)",
+        "kind": "process",
+        "x": 160,
+        "y": 380,
+        "w": 260,
+        "h": 70
+      },
+      {
+        "id": "t5",
+        "t": "Classificação da Tipologia do Pedido / Motivo do Contacto",
+        "kind": "process",
+        "x": 490,
+        "y": 380,
+        "w": 260,
+        "h": 70
+      },
+      {
+        "id": "t6",
+        "t": "Situação de Risco Iminente à Vida ou Estrutura (Fuga de Gás, Ruína, Inundação Ativa)?",
+        "kind": "decision",
+        "x": 470,
+        "y": 490,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "t7",
+        "t": "Ativação Imediata do Piquete de Obras / Bombeiros e Proteção Civil de Lisboa",
+        "kind": "terminal",
+        "link": "obras-piquete-emergencia",
+        "x": 860,
+        "y": 495,
+        "w": 290,
+        "h": 70
+      },
+      {
+        "id": "t8",
+        "t": "Assunto relacionado com Pagamento de Rendas, Notificações ou Acordos de Dívida?",
+        "kind": "decision",
+        "x": 470,
+        "y": 610,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "t9",
+        "t": "Encaminhar para Fluxo de Rendas e Acordos de Regularização",
+        "kind": "process",
+        "link": "rendas-acordos-regularizacao",
+        "x": 860,
+        "y": 615,
+        "w": 290,
+        "h": 70
+      },
+      {
+        "id": "t10",
+        "t": "Assunto relacionado com Obras, Conservação e Avarias no Edifício ou Fogo?",
+        "kind": "decision",
+        "x": 470,
+        "y": 730,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "t11",
+        "t": "Encaminhar para Fluxo de Obras no Interior do Fogo",
+        "kind": "process",
+        "link": "obras-interior-fogo",
+        "x": 860,
+        "y": 735,
+        "w": 290,
+        "h": 70
+      },
+      {
+        "id": "t12",
+        "t": "Assunto relacionado com Apoio Social, Carência Grave ou Conflitos de Vizinhança?",
+        "kind": "decision",
+        "x": 470,
+        "y": 850,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "t13",
+        "t": "Encaminhar para Gestão Social e Acompanhamento",
+        "kind": "process",
+        "link": "gestao-social-apoio",
+        "x": 860,
+        "y": 855,
+        "w": 290,
+        "h": 70
+      },
+      {
+        "id": "t14",
+        "t": "Registo Geral de Atendimento, Emissão de Comprovativo ao Munícipe e Encerramento",
+        "kind": "terminal",
+        "x": 480,
+        "y": 970,
+        "w": 280,
+        "h": 70
+      },
+      {
+        "id": "t_note",
+        "t": "Nota: Em todos os contactos, confirmar sempre o contacto telefónico móvel e email atualizados do arrendatário.",
+        "kind": "note",
+        "x": 100,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      }
+    ],
+    "edges": [
+      { "f": "t1", "t": "t2" },
+      { "f": "t2", "t": "t3" },
+      { "f": "t3", "t": "t5", "l": "Sim (Validado)" },
+      { "f": "t3", "t": "t4", "l": "Não / Terceiro" },
+      { "f": "t4", "t": "t5" },
+      { "f": "t5", "t": "t6" },
+      { "f": "t6", "t": "t7", "l": "Sim (Emergência)" },
+      { "f": "t6", "t": "t8", "l": "Não (Normal)" },
+      { "f": "t8", "t": "t9", "l": "Sim (Rendas)" },
+      { "f": "t8", "t": "t10", "l": "Outro motivo" },
+      { "f": "t10", "t": "t11", "l": "Sim (Obras)" },
+      { "f": "t10", "t": "t12", "l": "Outro motivo" },
+      { "f": "t12", "t": "t13", "l": "Sim (Social)" },
+      { "f": "t12", "t": "t14", "l": "Geral / Admin" }
+    ],
+    "w": 1240,
+    "h": 1100
+  },
+  {
+    "name": "Rendas — Acordos de Regularização de Dívida",
+    "slug": "rendas-acordos-regularizacao",
+    "nodes": [
+      {
+        "id": "rad1",
+        "t": "Início: Pedido de Regularização ou Consulta de Débito de Renda",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 300,
+        "h": 60
+      },
+      {
+        "id": "rad2",
+        "t": "Consulta da Conta Corrente e Histórico de Pagamentos no Módulo Financeiro",
+        "kind": "process",
+        "x": 450,
+        "y": 140,
+        "w": 320,
+        "h": 70
+      },
+      {
+        "id": "rad3",
+        "t": "Existe processo contencioso ou de resolução de contrato em curso no Gabinete Jurídico?",
+        "kind": "decision",
+        "x": 460,
+        "y": 250,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rad4",
+        "t": "Articulação com Gabinete Jurídico: Encaminhar para atendimento especializado",
+        "kind": "terminal",
+        "x": 840,
+        "y": 255,
+        "w": 280,
+        "h": 70
+      },
+      {
+        "id": "rad5",
+        "t": "Verificar se o montante total da dívida é inferior ao limite de delegação de competências",
+        "kind": "decision",
+        "x": 460,
+        "y": 370,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rad6",
+        "t": "Simulação de Plano Prestacional (até 36 meses conforme Regulamento Municipal)",
+        "kind": "process",
+        "x": 460,
+        "y": 490,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rad7",
+        "t": "O arrendatário concorda com o valor da entrada inicial e plano de mensalidades proposto?",
+        "kind": "decision",
+        "x": 460,
+        "y": 600,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rad8",
+        "t": "Verificar elegibilidade para Pedido de Carência Económica e Redução de Renda",
+        "kind": "process",
+        "link": "rendas-reducao-carencia",
+        "x": 100,
+        "y": 605,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rad9",
+        "t": "Geração da Minuta de Acordo de Pagamento e Envio para Assinatura Digital / Presencial",
+        "kind": "process",
+        "x": 460,
+        "y": 720,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rad10",
+        "t": "Emissão das Referências Multibanco da 1.ª Prestação e Registo do Acordo",
+        "kind": "terminal",
+        "x": 470,
+        "y": 830,
+        "w": 280,
+        "h": 70
+      },
+      {
+        "id": "rad_note",
+        "t": "Regra: O incumprimento de 2 prestações consecutivas implica anulação imediata do acordo e remessa para contencioso.",
+        "kind": "note",
+        "x": 840,
+        "y": 490,
+        "w": 300,
+        "h": 75
+      }
+    ],
+    "edges": [
+      { "f": "rad1", "t": "rad2" },
+      { "f": "rad2", "t": "rad3" },
+      { "f": "rad3", "t": "rad4", "l": "Sim (Contencioso)" },
+      { "f": "rad3", "t": "rad5", "l": "Não" },
+      { "f": "rad5", "t": "rad6", "l": "Elegível" },
+      { "f": "rad6", "t": "rad7" },
+      { "f": "rad7", "t": "rad9", "l": "Sim (Aceita)" },
+      { "f": "rad7", "t": "rad8", "l": "Não / Insuficiência" },
+      { "f": "rad9", "t": "rad10" }
+    ],
+    "w": 1200,
+    "h": 960
+  },
+  {
+    "name": "Rendas — Redução de Renda e Carência Económica",
+    "slug": "rendas-reducao-carencia",
+    "nodes": [
+      {
+        "id": "rrc1",
+        "t": "Início: Pedido de Recálculo de Renda Apoiada / Declaração de Quebra de Rendimentos",
+        "kind": "start",
+        "x": 450,
+        "y": 40,
+        "w": 320,
+        "h": 60
+      },
+      {
+        "id": "rrc2",
+        "t": "Verificar se ocorreu redução superior a 20% no rendimento mensal corrigido do agregado",
+        "kind": "decision",
+        "x": 460,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rrc3",
+        "t": "Informar que recálculo excecional exige quebra mínima regulamentar e aguardar declaração anual de IRS",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rrc4",
+        "t": "Lista de Documentação Obrigatória: Recibos de Vencimento / Subsídio Desemprego / Baixa Médica",
+        "kind": "process",
+        "x": 460,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rrc5",
+        "t": "Documentação submetida completa e válida através do Portal do Morador ou Balcão?",
+        "kind": "decision",
+        "x": 460,
+        "y": 370,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rrc6",
+        "t": "Notificar morador para junção de elementos em falta no prazo de 10 dias úteis",
+        "kind": "process",
+        "x": 840,
+        "y": 375,
+        "w": 280,
+        "h": 70
+      },
+      {
+        "id": "rrc7",
+        "t": "Cálculo da Taxa de Esforço e Nova Renda Provisória pelo Regulamento Municipal",
+        "kind": "process",
+        "x": 460,
+        "y": 490,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rrc8",
+        "t": "Existe situação de carência social extrema com necessidade de subsidiação complementar?",
+        "kind": "decision",
+        "x": 460,
+        "y": 600,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rrc9",
+        "t": "Sinalizar agregado para avaliação pela Direção de Intervenção Social e Fundo de Emergência",
+        "kind": "process",
+        "link": "gestao-social-apoio",
+        "x": 840,
+        "y": 605,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rrc10",
+        "t": "Homologação do novo valor de renda, atualização no sistema e emissão da fatura revista",
+        "kind": "terminal",
+        "x": 460,
+        "y": 720,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "rrc1", "t": "rrc2" },
+      { "f": "rrc2", "t": "rrc3", "l": "Quebra < 20%" },
+      { "f": "rrc2", "t": "rrc4", "l": "Quebra >= 20%" },
+      { "f": "rrc4", "t": "rrc5" },
+      { "f": "rrc5", "t": "rrc6", "l": "Incompleta" },
+      { "f": "rrc5", "t": "rrc7", "l": "Completa" },
+      { "f": "rrc6", "t": "rrc5" },
+      { "f": "rrc7", "t": "rrc8" },
+      { "f": "rrc8", "t": "rrc9", "l": "Sim (Risco Social)" },
+      { "f": "rrc8", "t": "rrc10", "l": "Não (Apenas Renda)" }
+    ],
+    "w": 1200,
+    "h": 860
+  },
+  {
+    "name": "Obras — Avarias Urgentes e Piquete 24 Horas",
+    "slug": "obras-piquete-emergencia",
+    "nodes": [
+      {
+        "id": "ope1",
+        "t": "Início: Comunicação de Ocorrência Grave / Avaria Crítica",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "ope2",
+        "t": "Qualificação da Emergência: Fuga de Gás, Incêndio, Inundação ou Queda de Elementos?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "ope3",
+        "t": "Encaminhamento Imediato para Linha 112 / Regimento de Sapadores Bombeiros de Lisboa",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ope4",
+        "t": "Avaria enquadra-se no Catálogo de Piquete Urgente Gebalis (Corte Geral de Água, Esgoto Rompido, Elevador com Pessoa Retida)?",
+        "kind": "decision",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "ope5",
+        "t": "Encaminhar para Fluxo Regular de Manutenção de Obras no Interior ou Partes Comuns",
+        "kind": "process",
+        "link": "obras-interior-fogo",
+        "x": 80,
+        "y": 265,
+        "w": 310,
+        "h": 70
+      },
+      {
+        "id": "ope6",
+        "t": "Abertura de Ordem de Serviço Urgente (OSU) no Sistema com prioridade Nível 1",
+        "kind": "process",
+        "x": 450,
+        "y": 380,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ope7",
+        "t": "Contacto e Despacho Imediato do Empreiteiro / Piquete em Serviço na Zona",
+        "kind": "process",
+        "x": 450,
+        "y": 490,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ope8",
+        "t": "Piquete no local no prazo máximo contratual de 2 a 4 horas para estancamento da avaria",
+        "kind": "process",
+        "x": 450,
+        "y": 600,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ope9",
+        "t": "A situação foi estancada em segurança com reposição do serviço essencial?",
+        "kind": "decision",
+        "x": 450,
+        "y": 710,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "ope10",
+        "t": "Ativação de Procedimento de Alojamento Provisório com Proteção Civil e Gestão Social",
+        "kind": "terminal",
+        "link": "gestao-social-apoio",
+        "x": 840,
+        "y": 715,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ope11",
+        "t": "Fecho da Ocorrência Urgente e Abertura de Reparação Definitiva se aplicável",
+        "kind": "terminal",
+        "x": 460,
+        "y": 830,
+        "w": 280,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "ope1", "t": "ope2" },
+      { "f": "ope2", "t": "ope3", "l": "Perigo de Vida / Fogo" },
+      { "f": "ope2", "t": "ope4", "l": "Avaria Predial Crítica" },
+      { "f": "ope4", "t": "ope5", "l": "Não Urgente" },
+      { "f": "ope4", "t": "ope6", "l": "Sim (Piquete Urgente)" },
+      { "f": "ope6", "t": "ope7" },
+      { "f": "ope7", "t": "ope8" },
+      { "f": "ope8", "t": "ope9" },
+      { "f": "ope9", "t": "ope10", "l": "Não (Risco de Inabitabilidade)" },
+      { "f": "ope9", "t": "ope11", "l": "Sim (Resolvido)" }
+    ],
+    "w": 1200,
+    "h": 960
+  },
+  {
+    "name": "Obras — Pedidos de Intervenção no Fogo",
+    "slug": "obras-interior-fogo",
+    "nodes": [
+      {
+        "id": "oif1",
+        "t": "Início: Registo de Pedido de Manutenção no Interior da Habitação",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "oif2",
+        "t": "Identificação do Elemento Afetado: Canalização, Pavimento, Caixilharia ou Eletricidade",
+        "kind": "process",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "oif3",
+        "t": "A intervenção é da responsabilidade de manutenção do Senhorio (Gebalis) ou decorrente de mau uso do locatário?",
+        "kind": "decision",
+        "x": 450,
+        "y": 250,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "oif4",
+        "t": "Informar arrendatário do dever de conservação e manutenção corrente a seu cargo (art.º 1074.º CC)",
+        "kind": "terminal",
+        "x": 840,
+        "y": 255,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "oif5",
+        "t": "Abertura de Pedido de Vistoria Técnica no Módulo de Engenharia e Manutenção",
+        "kind": "process",
+        "x": 450,
+        "y": 370,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "oif6",
+        "t": "Agendamento de Vistoria com Notificação via SMS / Email ao Arrendatário",
+        "kind": "process",
+        "x": 450,
+        "y": 480,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "oif7",
+        "t": "A vistoria confirma necessidade de Empreitada de Reabilitação ou Reparação Direta?",
+        "kind": "decision",
+        "x": 450,
+        "y": 590,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "oif8",
+        "t": "Integração no Plano Plurianual de Reabilitação de Fogos Municipais",
+        "kind": "terminal",
+        "x": 840,
+        "y": 595,
+        "w": 280,
+        "h": 70
+      },
+      {
+        "id": "oif9",
+        "t": "Emissão de Ordem de Serviço ao Empreiteiro da Zona e Acompanhamento da Conclusão",
+        "kind": "terminal",
+        "x": 460,
+        "y": 710,
+        "w": 280,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "oif1", "t": "oif2" },
+      { "f": "oif2", "t": "oif3" },
+      { "f": "oif3", "t": "oif4", "l": "Responsabilidade Locatário" },
+      { "f": "oif3", "t": "oif5", "l": "Responsabilidade Gebalis" },
+      { "f": "oif5", "t": "oif6" },
+      { "f": "oif6", "t": "oif7" },
+      { "f": "oif7", "t": "oif8", "l": "Grande Empreitada" },
+      { "f": "oif7", "t": "oif9", "l": "Reparação Direta" }
+    ],
+    "w": 1200,
+    "h": 840
+  },
+  {
+    "name": "Obras — Intervenção em Partes Comuns e Estrutura",
+    "slug": "obras-partes-comuns",
+    "nodes": [
+      {
+        "id": "opc1",
+        "t": "Início: Participação de Degradação em Partes Comuns (Fachada, Telhado, Escadas, Elevador)",
+        "kind": "start",
+        "x": 450,
+        "y": 40,
+        "w": 320,
+        "h": 60
+      },
+      {
+        "id": "opc2",
+        "t": "O edifício é de Propriedade Total Municipal ou em Regime de Propriedade Horizontal mista?",
+        "kind": "decision",
+        "x": 460,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "opc3",
+        "t": "Articulação com a Administração de Condomínio Externa / Coproprietários Privados",
+        "kind": "process",
+        "link": "condominios-administracao",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "opc4",
+        "t": "Vistoria da Equipa Técnica de Conservação e Estruturas da Gebalis",
+        "kind": "process",
+        "x": 460,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "opc5",
+        "t": "A anomalia afeta a segurança estrutural ou acessibilidade básica do edifício?",
+        "kind": "decision",
+        "x": 460,
+        "y": 370,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "opc6",
+        "t": "Ação Cautelar Imediata (Montagem de Escoramento, Redes de Proteção ou Vedações)",
+        "kind": "process",
+        "link": "obras-piquete-emergencia",
+        "x": 840,
+        "y": 375,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "opc7",
+        "t": "Elaboração de Caderno de Encargos para Concurso de Empreitada / Contrato de Manutenção",
+        "kind": "process",
+        "x": 460,
+        "y": 490,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "opc8",
+        "t": "Comunicação à Comissão de Moradores e Execução da Obra com Monitorização de Qualidade",
+        "kind": "terminal",
+        "x": 460,
+        "y": 600,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "opc1", "t": "opc2" },
+      { "f": "opc2", "t": "opc3", "l": "Condomínio Misto" },
+      { "f": "opc2", "t": "opc4", "l": "Propriedade Gebalis 100%" },
+      { "f": "opc4", "t": "opc5" },
+      { "f": "opc5", "t": "opc6", "l": "Sim (Risco Estrutural)" },
+      { "f": "opc5", "t": "opc7", "l": "Não (Desgaste Normal)" },
+      { "f": "opc6", "t": "opc7" },
+      { "f": "opc7", "t": "opc8" }
+    ],
+    "w": 1200,
+    "h": 750
+  },
+  {
+    "name": "Gestão Social — Apoio às Famílias e Situações de Risco",
+    "slug": "gestao-social-apoio",
+    "nodes": [
+      {
+        "id": "gsa1",
+        "t": "Início: Identificação de Situação de Vulnerabilidade Social no Fogo",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "gsa2",
+        "t": "Caracterização: Idoso Isolado, Menor em Risco, Violência Doméstica ou Doença Grave?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "gsa3",
+        "t": "Comunicação Urgente às Autoridades Judiciais, CPCJ ou Linha Nacional de Emergência Social (144)",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsa4",
+        "t": "Atribuição de Gestor de Processo Social do Gabinete de Bairro Gebalis",
+        "kind": "process",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsa5",
+        "t": "Agendamento de Entrevista Diagnóstica com o Agregado Familiar",
+        "kind": "process",
+        "x": 450,
+        "y": 370,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsa6",
+        "t": "Necessidade de Articulação com Santa Casa da Misericórdia de Lisboa (SCML) ou Segurança Social?",
+        "kind": "decision",
+        "x": 450,
+        "y": 480,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "gsa7",
+        "t": "Encaminhamento para Rede de Parceiros Locais e Comissões Sociais de Freguesia (CSF)",
+        "kind": "process",
+        "x": 840,
+        "y": 485,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsa8",
+        "t": "Definição do Plano Individual de Intervenção Social e Acompanhamento Periódico",
+        "kind": "terminal",
+        "x": 460,
+        "y": 600,
+        "w": 280,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "gsa1", "t": "gsa2" },
+      { "f": "gsa2", "t": "gsa3", "l": "Menor / Violência Iminente" },
+      { "f": "gsa2", "t": "gsa4", "l": "Vulnerabilidade Geral" },
+      { "f": "gsa4", "t": "gsa5" },
+      { "f": "gsa5", "t": "gsa6" },
+      { "f": "gsa6", "t": "gsa7", "l": "Sim (Apoio Exterior)" },
+      { "f": "gsa6", "t": "gsa8", "l": "Não (Acompanhamento Interno)" },
+      { "f": "gsa7", "t": "gsa8" }
+    ],
+    "w": 1200,
+    "h": 740
+  },
+  {
+    "name": "Gestão Social — Mediação e Conflitos de Vizinhança",
+    "slug": "gestao-social-conflitos",
+    "nodes": [
+      {
+        "id": "gsc1",
+        "t": "Início: Receção de Queixa de Vizinhança (Ruído, Insalubridade, Convivência)",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "gsc2",
+        "t": "Verificar se existe agressão física, ameaça direta ou ilícito criminal?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "gsc3",
+        "t": "Encaminhar para participação formal à Polícia de Segurança Pública (PSP) / Polícia Municipal",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsc4",
+        "t": "Registo da Reclamação com anonimato protegido e notificação dos visados para audição",
+        "kind": "process",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsc5",
+        "t": "Ambas as partes aceitam participar em Sessão de Mediação Comunitária?",
+        "kind": "decision",
+        "x": 450,
+        "y": 370,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "gsc6",
+        "t": "Realização de Sessão de Mediação com Técnico Social e Assinatura de Compromisso de Convivência",
+        "kind": "process",
+        "x": 450,
+        "y": 490,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsc7",
+        "t": "Notificação formal por violação do Regulamento Disciplinar de Habitação Municipal",
+        "kind": "process",
+        "x": 840,
+        "y": 375,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "gsc8",
+        "t": "Avaliação de cumprimento decorridos 30 dias com arquivamento ou remessa para procedimento contraordenacional",
+        "kind": "terminal",
+        "x": 450,
+        "y": 610,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "gsc1", "t": "gsc2" },
+      { "f": "gsc2", "t": "gsc3", "l": "Crime / Perigo Iminente" },
+      { "f": "gsc2", "t": "gsc4", "l": "Conflito Civil / Ruído" },
+      { "f": "gsc4", "t": "gsc5" },
+      { "f": "gsc5", "t": "gsc6", "l": "Sim (Acordo de Mediação)" },
+      { "f": "gsc5", "t": "gsc7", "l": "Recusa / Reincidência" },
+      { "f": "gsc6", "t": "gsc8" },
+      { "f": "gsc7", "t": "gsc8" }
+    ],
+    "w": 1200,
+    "h": 750
+  },
+  {
+    "name": "Habitação — Informação sobre Candidaturas e Realojamento",
+    "slug": "habitacao-atribuicao",
+    "nodes": [
+      {
+        "id": "ha1",
+        "t": "Início: Pedido de Habitação Municipal ou Consulta de Posição em Lista",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "ha2",
+        "t": "O cidadão já possui candidatura formal submetida na Plataforma Habitar Lisboa (CML)?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "ha3",
+        "t": "Informar sobre procedimentos de inscrição no Programa de Renda Acessível / Apoiada da CML",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ha4",
+        "t": "Consulta do Processo no Sistema Integrado de Habitação Municipal",
+        "kind": "process",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ha5",
+        "t": "O munícipe foi notificado para Audiência Prévia ou Atribuição Efetiva de Fogo?",
+        "kind": "decision",
+        "x": 450,
+        "y": 370,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "ha6",
+        "t": "Agendamento para visualização do fogo e instrução de celebração de contrato de arrendamento",
+        "kind": "terminal",
+        "x": 840,
+        "y": 375,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ha7",
+        "t": "Informar pontuação atualizada, necessidade de renovação anual da candidatura e entrega de comprovativos",
+        "kind": "terminal",
+        "x": 450,
+        "y": 490,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "ha1", "t": "ha2" },
+      { "f": "ha2", "t": "ha3", "l": "Não inscrito" },
+      { "f": "ha2", "t": "ha4", "l": "Candidatura Ativa" },
+      { "f": "ha4", "t": "ha5" },
+      { "f": "ha5", "t": "ha6", "l": "Sim (Atribuído)" },
+      { "f": "ha5", "t": "ha7", "l": "Em Lista de Espera" }
+    ],
+    "w": 1200,
+    "h": 650
+  },
+  {
+    "name": "Habitação — Transmissão de Fogo e Permutas",
+    "slug": "habitacao-transmissao-troca",
+    "nodes": [
+      {
+        "id": "htt1",
+        "t": "Início: Pedido de Transmissão por Morte / Divórcio ou Permuta de Habitação",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "htt2",
+        "t": "Qual o fundamento do pedido: Transmissão por Falecimento do Titular ou Pedido de Troca?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "htt3",
+        "t": "Verificar coabitação contínua mínima comprovada de 1 ano antes do óbito (art.º 1106.º CC)",
+        "kind": "decision",
+        "x": 260,
+        "y": 260,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "htt4",
+        "t": "Verificar motivos de Troca: Sobrelotação, Sublotação ou Mobilidade Reduzida",
+        "kind": "decision",
+        "x": 660,
+        "y": 260,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "htt5",
+        "t": "Indeferimento do pedido por falta de requisitos legais e comunicação formal dos prazos de desocupação",
+        "kind": "terminal",
+        "x": 60,
+        "y": 380,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "htt6",
+        "t": "Instrução do Processo de Transmissão com Atestado de Óbito, IRS e Certidão de Domicílio Fiscal",
+        "kind": "process",
+        "x": 410,
+        "y": 380,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "htt7",
+        "t": "Inscrição na Bolsa de Permutas da Gebalis e Agendamento de Vistoria de Conformidade ao Fogo Atual",
+        "kind": "process",
+        "x": 760,
+        "y": 380,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "htt8",
+        "t": "Aprovação pelo Conselho de Administração da Gebalis e Emissão de Novo Contrato",
+        "kind": "terminal",
+        "x": 460,
+        "y": 500,
+        "w": 280,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "htt1", "t": "htt2" },
+      { "f": "htt2", "t": "htt3", "l": "Transmissão Óbito" },
+      { "f": "htt2", "t": "htt4", "l": "Permuta / Troca" },
+      { "f": "htt3", "t": "htt5", "l": "Não elegível" },
+      { "f": "htt3", "t": "htt6", "l": "Elegível" },
+      { "f": "htt4", "t": "htt7", "l": "Motivo Válido" },
+      { "f": "htt6", "t": "htt8" },
+      { "f": "htt7", "t": "htt8" }
+    ],
+    "w": 1200,
+    "h": 650
+  },
+  {
+    "name": "Condomínios — Administração e Quotas de Partes Comuns",
+    "slug": "condominios-administracao",
+    "nodes": [
+      {
+        "id": "ca1",
+        "t": "Início: Consulta sobre Quotas de Condomínio ou Assembleia de Coproprietários",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "ca2",
+        "t": "O prédio tem administração direta Gebalis ou gestão externa eleita em Assembleia?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "ca3",
+        "t": "Fornecer contactos da empresa de administração externa e ata da última assembleia",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ca4",
+        "t": "Verificar Conta Corrente de Quotas do Imóvel / Fogo e Obras Comuns Aprovadas",
+        "kind": "process",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "ca5",
+        "t": "Emissão de Referência Multibanco para Pagamento de Quotas ou Declaração de Não-Dívida",
+        "kind": "terminal",
+        "x": 450,
+        "y": 380,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "ca1", "t": "ca2" },
+      { "f": "ca2", "t": "ca3", "l": "Gestão Externa" },
+      { "f": "ca2", "t": "ca4", "l": "Gestão Gebalis" },
+      { "f": "ca4", "t": "ca5" }
+    ],
+    "w": 1200,
+    "h": 550
+  },
+  {
+    "name": "Fiscalização — Ocupações Indevidas e Denúncias de Vandalismo",
+    "slug": "denuncias-ocupacoes",
+    "nodes": [
+      {
+        "id": "do1",
+        "t": "Início: Comunicação de Ocupação Ilegal, Arrombamento ou Dano em Património",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "do2",
+        "t": "Ocorrência em curso no exato momento (Arrombamento ativo ou intrusão em curso)?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "do3",
+        "t": "Articulação em tempo real com Centro de Comando da PSP e Polícia Municipal para intervenção em flagrante",
+        "kind": "terminal",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "do4",
+        "t": "Registo no Sistema de Fiscalização e Emissão de Auto de Notícia Interno",
+        "kind": "process",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "do5",
+        "t": "Deslocação da Equipa de Fiscalização ao Local e Notificação de Desocupação no prazo de 48h",
+        "kind": "process",
+        "x": 450,
+        "y": 370,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "do6",
+        "t": "A desocupação ocorreu voluntariamente no prazo concedido?",
+        "kind": "decision",
+        "x": 450,
+        "y": 480,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "do7",
+        "t": "Ativação do Procedimento de Despejo Administrativo com Apoio de Forças Policiais e Mudança de Fechaduras",
+        "kind": "terminal",
+        "x": 840,
+        "y": 485,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "do8",
+        "t": "Emparedamento cautelar / Instalação de Porta de Alta Segurança e Afetação a Nova Atribuição",
+        "kind": "terminal",
+        "x": 450,
+        "y": 600,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "do1", "t": "do2" },
+      { "f": "do2", "t": "do3", "l": "Flagrante Delito" },
+      { "f": "do2", "t": "do4", "l": "Ocupação Consumada" },
+      { "f": "do4", "t": "do5" },
+      { "f": "do5", "t": "do6" },
+      { "f": "do6", "t": "do7", "l": "Não (Recusa)" },
+      { "f": "do6", "t": "do8", "l": "Sim (Desocupado)" }
+    ],
+    "w": 1200,
+    "h": 750
+  },
+  {
+    "name": "Serviços Administrativos — Emissão de Declarações e Certidões",
+    "slug": "administrativo-certidoes",
+    "nodes": [
+      {
+        "id": "sac1",
+        "t": "Início: Pedido de Declaração para Segurança Social, Finanças, Cartão de Cidadão ou Escola",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "sac2",
+        "t": "O requerente tem situação de morada e agregado atualizada sem divergências cadastrais?",
+        "kind": "decision",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "sac3",
+        "t": "Solicitar atualização prévia do agregado com apresentação de certidão da junta de freguesia",
+        "kind": "process",
+        "x": 840,
+        "y": 145,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "sac4",
+        "t": "Geração Automática de Certidão de Residência / Comprovativo de Arrendamento com Assinatura Digital",
+        "kind": "process",
+        "x": 450,
+        "y": 260,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "sac5",
+        "t": "Envio imediato do PDF com Código de Validação Segura para o email do morador ou SMS",
+        "kind": "terminal",
+        "x": 460,
+        "y": 370,
+        "w": 280,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "sac1", "t": "sac2" },
+      { "f": "sac2", "t": "sac3", "l": "Divergência de Dados" },
+      { "f": "sac2", "t": "sac4", "l": "Dados Validados" },
+      { "f": "sac3", "t": "sac4" },
+      { "f": "sac4", "t": "sac5" }
+    ],
+    "w": 1200,
+    "h": 520
+  },
+  {
+    "name": "Qualidade — Registo de Reclamações e Sugestões do Munícipe",
+    "slug": "reclamacoes-qualidade",
+    "nodes": [
+      {
+        "id": "rq1",
+        "t": "Início: Manifestação de Descontentamento, Elogio ou Sugestão de Melhoria",
+        "kind": "start",
+        "x": 460,
+        "y": 40,
+        "w": 280,
+        "h": 60
+      },
+      {
+        "id": "rq2",
+        "t": "Registo no Livro de Reclamações Eletrónico ou Módulo Interno de Gestão da Qualidade",
+        "kind": "process",
+        "x": 450,
+        "y": 140,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rq3",
+        "t": "Atribuição de Número de Ocorrência Único e Prazo Legal de Resposta (máx. 15 dias úteis)",
+        "kind": "process",
+        "x": 450,
+        "y": 250,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rq4",
+        "t": "A reclamação envolve prestação de serviço de empreiteiro externo ou procedimento interno Gebalis?",
+        "kind": "decision",
+        "x": 450,
+        "y": 360,
+        "w": 300,
+        "h": 80
+      },
+      {
+        "id": "rq5",
+        "t": "Auditoria à atuação do prestador externo com eventual aplicação de penalidades contratuais",
+        "kind": "process",
+        "x": 840,
+        "y": 365,
+        "w": 300,
+        "h": 70
+      },
+      {
+        "id": "rq6",
+        "t": "Resposta fundamentada com medidas corretivas adotadas e envio de inquérito de satisfação",
+        "kind": "terminal",
+        "x": 450,
+        "y": 480,
+        "w": 300,
+        "h": 70
+      }
+    ],
+    "edges": [
+      { "f": "rq1", "t": "rq2" },
+      { "f": "rq2", "t": "rq3" },
+      { "f": "rq3", "t": "rq4" },
+      { "f": "rq4", "t": "rq5", "l": "Prestador Externo" },
+      { "f": "rq4", "t": "rq6", "l": "Serviço Interno" },
+      { "f": "rq5", "t": "rq6" }
+    ],
+    "w": 1200,
+    "h": 620
+  }
+]
